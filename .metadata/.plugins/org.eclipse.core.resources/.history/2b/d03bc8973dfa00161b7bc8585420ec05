@@ -1,0 +1,19 @@
+import javax.swing.JFrame;
+
+public class LeagueInvaders {
+	JFrame frame;
+	final int height = 800;
+	final int width = 500;
+public static void main(String[] args) {
+	LeagueInvaders lol = new LeagueInvaders();
+}
+ public LeagueInvaders(){
+	 frame = new JFrame();
+	 setup();
+ }
+ void setup(){
+	 frame.setVisible(true);
+	 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	 frame.pack();
+ }
+}

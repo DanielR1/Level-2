@@ -20,6 +20,8 @@ int currentState = MENU_STATE;
 Font titleFont;
 Font titleFont2;
 Font titleFont3; 
+Rocketship rocket = new Rocketship(250,700,50,50);
+ObjectManager manager = new ObjectManager();
 @Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
@@ -37,7 +39,8 @@ public void actionPerformed(ActionEvent e) {
 public GamePanel(){
 	time = new Timer(1000/60, this);
 	titleFont = new Font("Arial",Font.PLAIN,48);
-	titleFont2 = new Font("Arial",Font.PLAIN,20);
+	titleFont2 = new Font("Arial",Font.PLAIN,28);
+	manager.addObject(rocket);
 	
 
 }
@@ -71,6 +74,10 @@ public void keyPressed(KeyEvent e) {
 		else{
 			currentState +=1;
 		}
+	
+	}
+	else if(e.getKeyCode()==KeyEvent.VK_SPACE){
+		manager.addObject(new Projectile(rocket.x+20, rocket.y+20, 10, 10));
 	}
 	
 }
@@ -84,7 +91,8 @@ void updateMenuState(){
 	
 }
 void updateGameState(){
-	
+	manager.update();
+	manager.manageEnemies();
 }
 void updateEndState(){
 	
@@ -94,19 +102,30 @@ void drawMenuState(Graphics g){
 	g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);  
 	g.setFont(titleFont);
 	g.setColor(Color.yellow);
-	g.drawString("LEAGUE INVADERS", 150, 100);
+	g.drawString("LEAGUE INVADERS", 30, 200);
+	g.setFont(titleFont2);
+	g.setColor(Color.yellow);
+	g.drawString("Press ENTER to start", 110, 300);
+	g.drawString("Press SPACE for instructions", 70, 400);
 	
 }
 void drawGameState(Graphics g){
 	g.setColor(Color.BLACK);
 	g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height); 
+	manager.draw(g);
+	
 }
 void drawEndState(Graphics g){
 	g.setColor(Color.RED);
 	g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height); 
 	g.setFont(titleFont);
 	g.setColor(Color.black);
-	g.drawString("Game over get gud", 50, 100);
+	g.drawString("GAME OVER", 100, 100);
+	g.setFont(titleFont2);
+	g.setColor(Color.black);
+	g.drawString("You killed _ aliens", 130, 300);
+	g.drawString("Press BACKSPACE to Restart", 70, 500);
 }
+
 }
 

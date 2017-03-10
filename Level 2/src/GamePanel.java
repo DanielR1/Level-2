@@ -7,10 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-//I was in part 7 step 6
+
 public class GamePanel extends JPanel implements ActionListener, KeyListener{  
 Timer time;
 final int MENU_STATE = 0;
@@ -22,6 +26,10 @@ Font titleFont2;
 Font titleFont3; 
 Rocketship rocket = new Rocketship(250,700,50,50);
 ObjectManager manager = new ObjectManager();
+public static BufferedImage alienImg;
+public static BufferedImage rocketImg;
+public static BufferedImage bulletImg;
+
 @Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
@@ -41,6 +49,15 @@ public GamePanel(){
 	titleFont = new Font("Arial",Font.PLAIN,48);
 	titleFont2 = new Font("Arial",Font.PLAIN,28);
 	manager.addObject(rocket);
+	try {
+		alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
+		rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
+		bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
 	
 
 }
@@ -60,31 +77,53 @@ public void paintComponent(Graphics g){
 @Override
 public void keyTyped(KeyEvent e) {
 	// TODO Auto-generated method stub
-	System.out.println("a");
+
 }
 @Override
 public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
-	System.out.println("b");
+	
 	e.getSource();
 	if(e.getKeyCode()==KeyEvent.VK_ENTER){
+		if(currentState!=END_STATE){
+			currentState +=1;
+		}
+	}
+	if(e.getKeyCode()==KeyEvent.VK_BACK_SPACE){
 		if(currentState==END_STATE){
 			currentState = MENU_STATE;
 		}
-		else{
-			currentState +=1;
-		}
-	
 	}
-	else if(e.getKeyCode()==KeyEvent.VK_SPACE){
+	
+	if(e.getKeyCode()==KeyEvent.VK_SPACE){
+		if(currentState==MENU_STATE){
+			JOptionPane.showMessageDialog(null, "Move around with arow keys, shoot stuff");
+		}
+		if(currentState==GAME_STATE){
 		manager.addObject(new Projectile(rocket.x+20, rocket.y+20, 10, 10));
+		}
+	}
+	if(e.getKeyCode()==KeyEvent.VK_LEFT){
+		rocket.xspeed=-5;
+	}
+	if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+		rocket.xspeed=5;
+	}
+	if(e.getKeyCode()==KeyEvent.VK_UP){
+		rocket.yspeed=-5;
+	}
+	if(e.getKeyCode()==KeyEvent.VK_DOWN){
+		rocket.yspeed=5;
 	}
 	
 }
 @Override
 public void keyReleased(KeyEvent e) {
 	// TODO Auto-generated method stub
-	System.out.println("c");
+	if(e.getKeyCode()!=KeyEvent.VK_SPACE){
+	rocket.xspeed=0;
+	rocket.yspeed=0;
+	}
 	
 }
 void updateMenuState(){
@@ -93,6 +132,14 @@ void updateMenuState(){
 void updateGameState(){
 	manager.update();
 	manager.manageEnemies();
+	manager.checkCollision();
+	if(rocket.isAlive==false){
+		currentState=END_STATE;
+		manager.getScore();
+		manager.reset();
+		rocket=new Rocketship(250,700,50,50);
+		manager.addObject(rocket);
+	}
 }
 void updateEndState(){
 	
@@ -123,7 +170,7 @@ void drawEndState(Graphics g){
 	g.drawString("GAME OVER", 100, 100);
 	g.setFont(titleFont2);
 	g.setColor(Color.black);
-	g.drawString("You killed _ aliens", 130, 300);
+	g.drawString("You killed "+manager.getScore()+" aliens", 130, 300);
 	g.drawString("Press BACKSPACE to Restart", 70, 500);
 }
 

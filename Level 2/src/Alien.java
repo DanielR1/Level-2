@@ -1,28 +1,26 @@
 import java.awt.Color;
 import java.awt.Graphics;
-//Pt 11 challenge
 public class Alien extends GameObject {
 	int m;
-public Alien(int x, int y, int width, int height){
-	this.x=x;
-	this.y=y;
-	this.width=width;
-	this.height=height;
+
+	public Alien(int x, int y, int width, int height){
+	super(x,y,width,height);
 	
 }
+int counter = 0;
 void update(){
-	for (int i = 0; i < 3; i++) {
-	y+=1;
-	x+=30;
+	super.update();
+	y+=5;
+	if(counter%10==0)
+	{x+=10;}
+	else if(counter%5==0){
+		x-=10;
 	}
-	for (int i = 0; i < 3; i++) {
-	y+=1;
-	x-=30;
-	}
+	
+	counter+=1;
 }
 void draw(Graphics g){
-	g.setColor(Color.YELLOW);
-	g.fillRect(x, y, width, height);
+	g.drawImage(GamePanel.alienImg, x, y, width, height, null);
 	
 }
 }

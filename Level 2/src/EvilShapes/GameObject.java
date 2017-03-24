@@ -7,11 +7,11 @@ int x;
 int y;
 int width;
 int height;
+boolean isAlive = true;
 void update(){
-	x+=1;
-	y+=1;		
+	
 }
 void draw(Graphics g){
-	g.fillRect(x, y, 100, 100);
+	
 }
 }

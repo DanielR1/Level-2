@@ -104,6 +104,7 @@ void updateMenuState(){
 }
 void updateGameState(){
 manager.update();
+manager.manageEnemies();
 }
 void updateEndState(){
 	

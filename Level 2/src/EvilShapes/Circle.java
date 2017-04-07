@@ -6,6 +6,9 @@ import java.util.Random;
 
 public class Circle extends GameObject {
 int speed = 10;
+
+int pos = new Random().nextInt(720);
+int s = new Random().nextInt(4)+1;
 	public Circle(int x, int y, int width, int height){
 		this.x=x;
 		this.y=y;
@@ -14,10 +17,22 @@ int speed = 10;
 	}
 	void update(){
 		
+		if(s==1){
+			x+=speed;
+		}
+		if(s==2){
+			y-=speed;
+		}
+		if(s==3){
+			x-=speed;
+		}
+		if(s==4){
+			y+=speed;
+	}
 	}
 	void draw(Graphics g){
 		g.setColor(Color.red);
-		int pos = new Random().nextInt(720);
-		int s = new Random().nextInt(4)
+		g.fillRect(x, y, width, height);
+		}
 	}
-}
+

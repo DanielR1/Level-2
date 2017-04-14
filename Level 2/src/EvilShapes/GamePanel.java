@@ -26,6 +26,7 @@ public GamePanel(){
 titleFont=new Font("Arial",Font.PLAIN, 48);
 titleFont2 =new Font("Arial",Font.PLAIN, 30);
 manager.addObject(square); 
+
 }
 void startGame(){
 	timer.start();
@@ -105,6 +106,11 @@ void updateMenuState(){
 void updateGameState(){
 manager.update();
 manager.manageEnemies();
+manager.checkCollision();
+if(square.isAlive==false){
+	currentState=END_STATE;
+	manager.getScore();
+}
 }
 void updateEndState(){
 	

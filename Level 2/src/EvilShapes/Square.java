@@ -7,14 +7,13 @@ public class Square extends GameObject {
 	int xspeed;
 	int yspeed;
 public Square(int x, int y, int width, int height){
-	this.x=x;
-	this.y=y;
-	this.width=width;
-	this.height=height;
+	super(x,y,width,height);
+	
 	xspeed=0;
 	yspeed=0;
 }
 void update(){
+	super.update();
 	x+=xspeed;
 	y+=yspeed;
 }

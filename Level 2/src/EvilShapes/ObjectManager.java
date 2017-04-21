@@ -23,6 +23,7 @@ public class ObjectManager {
 		for (int i = 0; i < objects.size(); i++) {
 			GameObject o = objects.get(i);
 			o.update();
+			
 		}
 		
 		purgeObjects();	
@@ -66,6 +67,7 @@ public class ObjectManager {
 				addObject(new Circle(pos+40,800 , 40, 40, s));
 				 t = new Random().nextInt(3)+1;
 			}
+		}
 			if(t==2){
 				if(s==1){
 					addObject(new Triangle(0, pos+40, 40, 40, s));
@@ -105,7 +107,7 @@ public class ObjectManager {
 			enemyTimer = System.currentTimeMillis();
 		}
 		}
-	}
+	
  
 	public void checkCollision() {
 		for (int i = 0; i < objects.size(); i++) {
@@ -122,12 +124,40 @@ public class ObjectManager {
 					o1.isAlive = false;
 						
 					}
-					else if((o1 instanceof Triangle && o2 instanceof Square) ||
+					if((o1 instanceof Triangle && o2 instanceof Square) ||
 							(o2 instanceof Triangle && o1 instanceof Square)){
 						System.out.println("lprint");
 						o1.isAlive = false;
 						o2.isAlive = false;
 						
+					}
+					if((o1 instanceof Circle && o2 instanceof Square)||
+					(o2 instanceof Circle && o1 instanceof Square)){
+						
+						Circle bounce = (o1 instanceof Circle) ? (Circle)o1 : (Circle)o2;
+						if(!bounce.bounced){
+						if(bounce.s==1){
+						bounce.xspeed=bounce.xspeed*(-1);
+						
+						}
+						if(bounce.s==2){
+							bounce.yspeed=bounce.yspeed*(-1);
+						}
+						if(bounce.s==3){
+							bounce.xspeed=bounce.xspeed*(-1);
+						}
+						if(bounce.s==4){
+							bounce.yspeed=bounce.yspeed*(-1);
+						}
+						bounce.bounced=true;
+						}
+					}
+					if((o1 instanceof BWTriangle && o2 instanceof Square)||
+							(o2 instanceof BWTriangle && o1 instanceof Square)){
+						Square bounce = (o1 instanceof Square) ? (Square)o1 : (Square)o2;
+						BWTriangle bounce1 = (o1 instanceof BWTriangle) ? (BWTriangle)o1 : (BWTriangle)o2;
+						bounce.xspeed=bounce1.xspeed;
+						bounce.yspeed=bounce1.yspeed;
 					}
 
 				}

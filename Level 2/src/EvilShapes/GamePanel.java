@@ -104,12 +104,29 @@ void updateMenuState(){
 	
 }
 void updateGameState(){
+	
 manager.update();
 manager.manageEnemies();
 manager.checkCollision();
+if(square.x==0){
+	square.isAlive=false;
+}
+if(square.x==750){
+	square.isAlive=false;
+}
+if(square.y==0){
+	square.isAlive=false;
+}
+if(square.y==750){
+	square.isAlive=false;
+}
 if(square.isAlive==false){
 	currentState=END_STATE;
 	manager.getScore();
+	manager.reset();
+	square=new Square(375,365,50,50);
+	manager.addObject(square);
+	
 }
 }
 void updateEndState(){

@@ -58,10 +58,12 @@ int yspeed;
 
 		}
 		if (s == 3) {
+			//xspeed=xspeed*(-1);
 			x -= xspeed;
 			y += yspeed;
 		}
 		if (s == 4) {
+			//yspeed=yspeed*(-1);
 			y -= yspeed;
 			x += xspeed;
 

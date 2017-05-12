@@ -16,6 +16,7 @@ void update(){
 	super.update();
 	x+=xspeed;
 	y+=yspeed;
+	
 }
 void draw(Graphics g){
 	g.setColor(Color.BLUE);

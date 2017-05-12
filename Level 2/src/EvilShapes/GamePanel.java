@@ -21,6 +21,8 @@ Font titleFont;
 Font titleFont2;
 Square square = new Square(375,365,50,50);
 ObjectManager manager = new ObjectManager();
+int millis = 0;
+
 public GamePanel(){
 	timer = new Timer(1000/60, this);
 titleFont=new Font("Arial",Font.PLAIN, 48);
@@ -38,6 +40,7 @@ public void actionPerformed(ActionEvent e) {
 	if(currentState == MENU_STATE){
 		updateMenuState();
 	}else if(currentState == GAME_STATE){
+		millis+=200;
 		updateGameState();
 	}else if(currentState == END_STATE){
 		updateEndState();
@@ -101,29 +104,34 @@ public void keyReleased(KeyEvent e) {
 
 }
 void updateMenuState(){
-	
+	manager.round=1;
+	millis=0;
 }
 void updateGameState(){
 	
 manager.update();
 manager.manageEnemies();
 manager.checkCollision();
-if(square.x==0){
+if(millis%50000==0){
+	manager.round+=1;
+}
+if(square.x<=0){
 	square.isAlive=false;
 }
-if(square.x==750){
+if(square.x>=750){
 	square.isAlive=false;
 }
-if(square.y==0){
+if(square.y<=0){
 	square.isAlive=false;
 }
-if(square.y==750){
+if(square.y>=750){
 	square.isAlive=false;
 }
 if(square.isAlive==false){
 	currentState=END_STATE;
 	manager.getScore();
 	manager.reset();
+	
 	square=new Square(375,365,50,50);
 	manager.addObject(square);
 	
@@ -146,6 +154,9 @@ void drawGameState(Graphics g){
 	g.setColor(new Color(200, 200,200));
 	g.fillRect(0, 0, EvilShapes.width, EvilShapes.height);
 	manager.draw(g);
+	g.setFont(titleFont2);
+	g.setColor(Color.BLACK);
+	g.drawString("Round "+manager.round, 100, 100);
 }
 void drawEndState(Graphics g){
 	g.setColor(new Color(196, 16, 16));
@@ -154,7 +165,7 @@ void drawEndState(Graphics g){
 	g.setColor(Color.black);
 	g.drawString("GAME OVER", 260, 120);
 	g.setFont(titleFont2);
-	g.drawString("You lasted _ rounds", 265, 250);
+	g.drawString("You lasted "+manager.round+" rounds", 265, 250);
 	g.drawString("Press BACKSPACE to go again", 200, 400);
 }
 }

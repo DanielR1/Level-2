@@ -3,13 +3,17 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
 public class ObjectManager {
 	ArrayList<GameObject> objects;
 	
 	private int score = 0;
-	
+	int round = 1;
 	long enemyTimer = 0;
-	int enemySpawnTime = 200;
+	int enemySpawnTime = 400/round;
+	
+	
 	
 	public ObjectManager() {
 		objects = new ArrayList<GameObject>();
@@ -122,7 +126,12 @@ public class ObjectManager {
 						score++;
 						System.out.println(score);
 					o1.isAlive = false;
-						
+					if((o1 instanceof Circle && o2 instanceof Triangle))
+					   {System.out.println("lol");
+						score++;
+						System.out.println(score);
+					o2.isAlive = false;
+					   }
 					}
 					if((o1 instanceof Triangle && o2 instanceof Square) ||
 							(o2 instanceof Triangle && o1 instanceof Square)){
@@ -156,13 +165,35 @@ public class ObjectManager {
 							(o2 instanceof BWTriangle && o1 instanceof Square)){
 						Square bounce = (o1 instanceof Square) ? (Square)o1 : (Square)o2;
 						BWTriangle bounce1 = (o1 instanceof BWTriangle) ? (BWTriangle)o1 : (BWTriangle)o2;
-						bounce.xspeed=bounce1.xspeed;
-						bounce.yspeed=bounce1.yspeed;
+						if (bounce1.s == 1) {
+							bounce.xspeed=bounce1.xspeed;
+							bounce.yspeed=bounce1.yspeed;
+						
+
+						}
+						if (bounce1.s == 2) {
+
+							bounce.xspeed=bounce1.xspeed;
+							bounce.yspeed=bounce1.yspeed;
+
+						}
+						if (bounce1.s == 3) {
+
+							bounce.xspeed=bounce1.xspeed*(-1);
+							bounce.yspeed=bounce1.yspeed;
+						}
+						if (bounce1.s == 4) {
+
+							bounce.xspeed=bounce1.xspeed;
+							bounce.yspeed=bounce1.yspeed*(-1);
+						}
+						
 					}
 
 				}
 		}
 		}
+		
 	}
 	
 	public int getScore(){
@@ -175,5 +206,6 @@ public class ObjectManager {
 	
 	public void reset(){
 		objects.clear();
+		
 	}
 }

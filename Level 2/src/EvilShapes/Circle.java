@@ -71,7 +71,6 @@ public class Circle extends GameObject {
 	}
 
 	void draw(Graphics g) {
-		g.setColor(Color.red);
-		g.fillRect(x, y, width, height);
+		g.drawImage(GamePanel.CircleImg, x, y, width, height, null);
 	}
 }

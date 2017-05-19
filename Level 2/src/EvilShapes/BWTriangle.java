@@ -72,8 +72,7 @@ int yspeed;
 	
 
 	void draw(Graphics g){
-		g.setColor(Color.green);
-		g.fillRect(x, y, width, height);
+		g.drawImage(GamePanel.SlimeImg, x, y, width, height, null);
 		}
 	}
 

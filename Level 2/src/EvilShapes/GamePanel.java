@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -19,6 +22,11 @@ final int END_STATE = 2;
 int currentState = MENU_STATE;
 Font titleFont;
 Font titleFont2;
+public static BufferedImage SpikeImg;
+public static BufferedImage SlimeImg;
+public static BufferedImage CircleImg;
+public static BufferedImage PlayerImg;
+
 Square square = new Square(375,365,50,50);
 ObjectManager manager = new ObjectManager();
 int millis = 0;
@@ -28,6 +36,15 @@ public GamePanel(){
 titleFont=new Font("Arial",Font.PLAIN, 48);
 titleFont2 =new Font("Arial",Font.PLAIN, 30);
 manager.addObject(square); 
+try {
+	SpikeImg = ImageIO.read(this.getClass().getResourceAsStream("spike.png"));
+	SlimeImg = ImageIO.read(this.getClass().getResourceAsStream("slimeball.png"));
+	CircleImg = ImageIO.read(this.getClass().getResourceAsStream("circle.png"));
+	PlayerImg = ImageIO.read(this.getClass().getResourceAsStream("player.png"));
+} catch (IOException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
 
 }
 void startGame(){
@@ -76,7 +93,7 @@ if(e.getKeyCode()==KeyEvent.VK_ENTER){
 }
 if(e.getKeyCode()==KeyEvent.VK_SPACE){
 	if(currentState==MENU_STATE){
-		JOptionPane.showMessageDialog(null, "You are the Square. Move with arrow keys to avoid triangles and use circles as projectiles bouncing off of you");
+		JOptionPane.showMessageDialog(null, "You are the Square. Move with arrow keys. Spike balls kill you, slimeballs get you stuck, circles reflect off of you and kill spike balls.000");
 	}
 }
 if(currentState==GAME_STATE){

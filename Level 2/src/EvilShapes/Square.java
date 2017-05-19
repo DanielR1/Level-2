@@ -19,8 +19,6 @@ void update(){
 	
 }
 void draw(Graphics g){
-	g.setColor(Color.BLUE);
-	g.fillRect(x, y, width, height);
-
+	g.drawImage(GamePanel.PlayerImg, x, y, width, height, null);
 }
 }

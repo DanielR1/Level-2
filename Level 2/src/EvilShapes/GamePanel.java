@@ -98,16 +98,16 @@ if(e.getKeyCode()==KeyEvent.VK_SPACE){
 }
 if(currentState==GAME_STATE){
 	if(e.getKeyCode()==KeyEvent.VK_LEFT){
-		square.xspeed=-5;
+		square.left = true;
 	}
 	if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-		square.xspeed=5;
+		square.right=true;
 	}
 	if(e.getKeyCode()==KeyEvent.VK_UP){
-		square.yspeed=-5;
+		square.up=true;
 	}
 	if(e.getKeyCode()==KeyEvent.VK_DOWN){
-		square.yspeed=5;
+		square.down=true;
 	}
 }
 }
@@ -115,8 +115,18 @@ if(currentState==GAME_STATE){
 public void keyReleased(KeyEvent e) {
 	// TODO Auto-generated method stub
 	if(currentState==GAME_STATE){
-		square.xspeed=0;
-		square.yspeed=0;
+		if(e.getKeyCode()==KeyEvent.VK_LEFT){
+			square.left = false;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+			square.right=false;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_UP){
+			square.up=false;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_DOWN){
+			square.down=false;
+		}
 	}
 
 }

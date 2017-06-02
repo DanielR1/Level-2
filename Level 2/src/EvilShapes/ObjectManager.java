@@ -113,9 +113,15 @@ public class ObjectManager {
 	}
 
 	public void checkCollision() {
+		boolean squarecollide=false;
+		Square t=null;
 		for (int i = 0; i < objects.size(); i++) {
+			GameObject o1 = objects.get(i);
+			if(o1 instanceof Square){
+				t=(Square) o1;
+			}
 			for (int j = i + 1; j < objects.size(); j++) {
-				GameObject o1 = objects.get(i);
+				
 				GameObject o2 = objects.get(j);
 
 				if (o1.collisionBox.intersects(o2.collisionBox)) {
@@ -165,24 +171,26 @@ public class ObjectManager {
 							|| (o2 instanceof BWTriangle && o1 instanceof Square)) {
 						Square bounce = (o1 instanceof Square) ? (Square) o1 : (Square) o2;
 						BWTriangle bounce1 = (o1 instanceof BWTriangle) ? (BWTriangle) o1 : (BWTriangle) o2;
+						squarecollide=true;
 						if (bounce1.s == 1) {
+							System.out.println("1");
 							bounce.xspeed = bounce1.xspeed;
 							bounce.yspeed = bounce1.yspeed;
 
 						}
 						if (bounce1.s == 2) {
-
+System.out.println("2");
 							bounce.xspeed = bounce1.xspeed;
 							bounce.yspeed = bounce1.yspeed;
 
 						}
 						if (bounce1.s == 3) {
-
+System.out.println("3");
 							bounce.xspeed = bounce1.xspeed * (-1);
 							bounce.yspeed = bounce1.yspeed;
 						}
 						if (bounce1.s == 4) {
-
+System.out.println("4");
 							bounce.xspeed = bounce1.xspeed;
 							bounce.yspeed = bounce1.yspeed * (-1);
 						}
@@ -192,7 +200,7 @@ public class ObjectManager {
 				}
 			}
 		}
-
+t.collision=squarecollide;
 	}
 
 	public int getScore() {

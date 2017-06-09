@@ -1,9 +1,11 @@
 package EvilShapes;
 
+import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JApplet;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 public class ObjectManager {
@@ -41,7 +43,21 @@ public class ObjectManager {
 
 	private void purgeObjects() {
 		for (int i = 0; i < objects.size(); i++) {
+			GameObject o = objects.get(i);
 			if (!objects.get(i).isAlive) {
+				objects.remove(i);
+			}
+			
+			else if(o.x<=-20){
+				objects.remove(i);
+			}
+			else if(o.x>=820){
+				objects.remove(i);
+			}
+			else if(o.y<=-20){
+				objects.remove(i);
+			}
+			else if(o.y>=820){
 				objects.remove(i);
 			}
 		}
@@ -127,17 +143,29 @@ public class ObjectManager {
 				if (o1.collisionBox.intersects(o2.collisionBox)) {
 
 					if ((o1 instanceof Triangle && o2 instanceof Circle)) {
-						System.out.println("lol");
+					
 						score++;
 						System.out.println(score);
 						o1.isAlive = false;
 					}
 						if ((o1 instanceof Circle && o2 instanceof Triangle)) {
-							System.out.println("lol****");
+						
 							score++;
 							System.out.println(score);
 							o2.isAlive = false;
 						}
+						if ((o1 instanceof BWTriangle && o2 instanceof Circle)) {
+						
+							score++;
+							System.out.println(score);
+							o1.isAlive = false;
+						}
+							if ((o1 instanceof Circle && o2 instanceof BWTriangle)) {
+				
+								score++;
+								System.out.println(score);
+								o2.isAlive = false;
+							}
 					
 					if ((o1 instanceof Triangle && o2 instanceof Square)
 							|| (o2 instanceof Triangle && o1 instanceof Square)) {
@@ -148,7 +176,7 @@ public class ObjectManager {
 					}
 					if ((o1 instanceof Circle && o2 instanceof Square)
 							|| (o2 instanceof Circle && o1 instanceof Square)) {
-
+playSound("CircleCollide.wav");
 						Circle bounce = (o1 instanceof Circle) ? (Circle) o1 : (Circle) o2;
 						if (!bounce.bounced) {
 							if (bounce.s == 1) {
@@ -215,4 +243,10 @@ t.collision=squarecollide;
 		objects.clear();
 
 	}
+	private void playSound(String fileName) {
+		AudioClip sound = JApplet
+				.newAudioClip(getClass().getResource(fileName));
+		sound.play();
+	}
+
 }

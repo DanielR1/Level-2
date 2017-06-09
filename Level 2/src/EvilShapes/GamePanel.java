@@ -1,4 +1,5 @@
 package EvilShapes;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JApplet;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -26,7 +28,7 @@ public static BufferedImage SpikeImg;
 public static BufferedImage SlimeImg;
 public static BufferedImage CircleImg;
 public static BufferedImage PlayerImg;
-
+SongPlayer play;
 Square square = new Square(375,365,50,50);
 ObjectManager manager = new ObjectManager();
 int millis = 0;
@@ -48,6 +50,8 @@ try {
 
 }
 void startGame(){
+	play = new SongPlayer("Theme.mp3");
+	play.play();
 	timer.start();
 }
 @Override
@@ -83,13 +87,20 @@ public void keyTyped(KeyEvent e) {
 @Override
 public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
+	if(e.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+		if(currentState == END_STATE){
+			currentState = MENU_STATE;
+			playSound("Startup.wav");
+
+		}
+	
+	}
 if(e.getKeyCode()==KeyEvent.VK_ENTER){
-	if(currentState == END_STATE){
-		currentState = MENU_STATE;
-	}
-	else{
+	if(currentState == MENU_STATE){
 		currentState+=1;
+		playSound("Click.wav");
 	}
+	
 }
 if(e.getKeyCode()==KeyEvent.VK_SPACE){
 	if(currentState==MENU_STATE){
@@ -155,6 +166,7 @@ if(square.y>=750){
 	square.isAlive=false;
 }
 if(square.isAlive==false){
+	playSound("Die.wav");
 	currentState=END_STATE;
 	manager.getScore();
 	manager.reset();
@@ -195,4 +207,10 @@ void drawEndState(Graphics g){
 	g.drawString("You lasted "+manager.round+" rounds", 265, 250);
 	g.drawString("Press BACKSPACE to go again", 200, 400);
 }
+private void playSound(String fileName) {
+	AudioClip sound = JApplet
+			.newAudioClip(getClass().getResource(fileName));
+	sound.play();
+}
+
 }

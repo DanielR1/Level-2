@@ -14,7 +14,7 @@ public class ObjectManager {
 	private int score = 0;
 	int round = 1;
 	long enemyTimer = 0;
-	long enemySpawnTime = Math.round(500 /(round*(1.5)));
+	long enemySpawnTime = Math.round(500 /(round*(1.7)));
 
 	public ObjectManager() {
 		objects = new ArrayList<GameObject>();

@@ -87,6 +87,14 @@ public void keyTyped(KeyEvent e) {
 @Override
 public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
+	if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+		if(currentState==MENU_STATE){
+		int quit=	JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit?", JOptionPane.YES_NO_OPTION);
+		if (quit==0){
+			System.exit(0);
+		}
+		}
+	}
 	if(e.getKeyCode()==KeyEvent.VK_BACK_SPACE){
 		if(currentState == END_STATE){
 			currentState = MENU_STATE;
@@ -104,7 +112,7 @@ if(e.getKeyCode()==KeyEvent.VK_ENTER){
 }
 if(e.getKeyCode()==KeyEvent.VK_SPACE){
 	if(currentState==MENU_STATE){
-		JOptionPane.showMessageDialog(null, "You are the Square. Move with arrow keys. Spike balls kill you, slimeballs get you stuck, circles reflect off of you and kill spike balls.000");
+		JOptionPane.showMessageDialog(null, "You are the Square. Move with arrow keys. Spike balls kill you, slimeballs get you stuck, circles reflect off of you and kill spike balls");
 	}
 }
 if(currentState==GAME_STATE){
@@ -143,6 +151,7 @@ public void keyReleased(KeyEvent e) {
 }
 void updateMenuState(){
 	manager.round=1;
+	
 	millis=0;
 }
 void updateGameState(){
@@ -152,6 +161,7 @@ manager.manageEnemies();
 manager.checkCollision();
 if(millis%50000==0){
 	manager.round+=1;
+	playSound("round.wav");
 }
 if(square.x<=0){
 	square.isAlive=false;
@@ -180,7 +190,7 @@ void updateEndState(){
 	
 }
 void drawMenuState(Graphics g){
-	g.setColor(new Color(21, 159, 53));
+	g.setColor(new Color(0, 148, 206));
 	g.fillRect(0, 0, EvilShapes.width, EvilShapes.height); 
 	g.setFont(titleFont); 
 	g.setColor(Color.black);
@@ -188,9 +198,44 @@ void drawMenuState(Graphics g){
 	g.setFont(titleFont2);
 	g.drawString("Press ENTER to start",250, 250);
 	g.drawString("Press SPACE for instructions", 200, 400);
+	g.drawString("Press ESC to quit", 280, 550);
 }
 void drawGameState(Graphics g){
-	g.setColor(new Color(200, 200,200));
+	
+	
+	if(manager.round==1){
+		g.setColor(new Color(0, 206, 68));
+	}
+	if(manager.round==2){
+		g.setColor(new Color(0, 206, 20));
+	}
+	if(manager.round==3){
+		g.setColor(new Color(28, 206, 0));
+	}
+	if(manager.round==4){
+		g.setColor(new Color(76, 206, 0));
+	}
+	if(manager.round==5){
+		g.setColor(new Color(124, 206, 0));
+	}
+	if(manager.round==6){
+		g.setColor(new Color(172, 206, 0));
+	}
+	if(manager.round==7){
+		g.setColor(new Color(206, 192, 0));
+	}
+	if(manager.round==8){
+		g.setColor(new Color(206, 144, 0));
+	}
+	if(manager.round==9){
+		g.setColor(new Color(206, 96, 0));
+	}
+	if(manager.round==10){
+		g.setColor(new Color(206, 48, 0));
+	}
+	if(manager.round>=11){
+		g.setColor(new Color(206, 0, 0));
+	}
 	g.fillRect(0, 0, EvilShapes.width, EvilShapes.height);
 	manager.draw(g);
 	g.setFont(titleFont2);

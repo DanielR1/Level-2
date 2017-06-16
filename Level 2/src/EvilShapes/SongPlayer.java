@@ -31,6 +31,7 @@ public class SongPlayer extends PlaybackListener {
 		}
 		public void playbackFinished(PlaybackEvent evt){
 			play();
+			System.out.println("Should be playing");
 		}
 		public void play() {
 			loadFile();
@@ -68,6 +69,7 @@ public class SongPlayer extends PlaybackListener {
 		private void loadPlayer() {
 			try {
 				this.mp3Player = new AdvancedPlayer(songStream);
+				mp3Player.setPlayBackListener(this);
 			} catch (Exception e) {
 			}
 		}

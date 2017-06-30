@@ -1,9 +1,12 @@
 package EvilShapes;
 
 import java.applet.AudioClip;
+import javax.swing.*;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+
 
 import javax.swing.JApplet;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
@@ -11,13 +14,23 @@ import javax.swing.text.StyledEditorKit.ForegroundAction;
 public class ObjectManager {
 	ArrayList<GameObject> objects;
 
+	public int millis;
+
+	public int getMillis() {
+		return millis;
+	}
+
+	public void setMillis(int millis) {
+		this.millis = millis;
+	}
 	private int score = 0;
 	int round = 1;
 	long enemyTimer = 0;
 	long enemySpawnTime = Math.round(500 /(round*(1.7)));
-
+long lastCollision;
 	public ObjectManager() {
 		objects = new ArrayList<GameObject>();
+		long tick= System.currentTimeMillis();
 	}
 
 	public void addObject(GameObject o) {
@@ -69,6 +82,7 @@ public class ObjectManager {
 			// 50, 50));
 			int s = new Random().nextInt(4) + 1;
 			int t = new Random().nextInt(3) + 1;
+			
 			int pos = new Random().nextInt(720);
 			if (t == 1) {
 				if (s == 1) {
@@ -131,6 +145,12 @@ public class ObjectManager {
 	public void checkCollision() {
 		boolean squarecollide=false;
 		Square t=null;
+		System.out.println(millis);
+		long currentTime=System.currentTimeMillis();
+		if(currentTime-lastCollision<400){
+			System.out.println("skipped collision");
+			return;
+		}
 		for (int i = 0; i < objects.size(); i++) {
 			GameObject o1 = objects.get(i);
 			if(o1 instanceof Square){
@@ -181,19 +201,24 @@ playSound("CircleCollide.wav");
 						if (!bounce.bounced) {
 							if (bounce.s == 1) {
 								bounce.xspeed = bounce.xspeed * (-1);
+								bounce.x-=bounce.xspeed*-2;
 
 							}
 							if (bounce.s == 2) {
 								bounce.yspeed = bounce.yspeed * (-1);
+								bounce.y-=bounce.yspeed*-2;
 							}
 							if (bounce.s == 3) {
 								bounce.xspeed = bounce.xspeed * (-1);
+								bounce.x+=bounce.xspeed*-2;
 							}
 							if (bounce.s == 4) {
 								bounce.yspeed = bounce.yspeed * (-1);
+								bounce.y+=bounce.yspeed*-2;
 							}
 							bounce.bounced = true;
 						}
+						lastCollision=currentTime;
 					}
 					if ((o1 instanceof BWTriangle && o2 instanceof Square)
 							|| (o2 instanceof BWTriangle && o1 instanceof Square)) {

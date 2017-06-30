@@ -35,6 +35,7 @@ int millis = 0;
 
 public GamePanel(){
 	timer = new Timer(1000/60, this);
+	manager.millis=millis;
 titleFont=new Font("Arial",Font.PLAIN, 48);
 titleFont2 =new Font("Arial",Font.PLAIN, 30);
 manager.addObject(square); 

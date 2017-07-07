@@ -15,7 +15,7 @@ int yspeed;
 		super(x,y,width,height);
 		this.s=s;
 		int k = new Random().nextInt(2) + 1;
-		xspeed = new Random().nextInt(15) + 1;
+		xspeed = new Random().nextInt(15) + 3;
 		yspeed = 15 - xspeed;
 		if (s == 1) {
 

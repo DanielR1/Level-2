@@ -113,7 +113,7 @@ if(e.getKeyCode()==KeyEvent.VK_ENTER){
 }
 if(e.getKeyCode()==KeyEvent.VK_SPACE){
 	if(currentState==MENU_STATE){
-		JOptionPane.showMessageDialog(null, "You are the Square. Move with arrow keys. Spike balls kill you, slimeballs get you stuck, circles reflect off of you and kill spike balls");
+		JOptionPane.showMessageDialog(null, "You are the Square. Move with arrow keys. Spike balls kill you, slimeballs stick you to them, red balls reflect off of you and kill spike balls");
 	}
 }
 if(currentState==GAME_STATE){
@@ -195,7 +195,7 @@ void drawMenuState(Graphics g){
 	g.fillRect(0, 0, EvilShapes.width, EvilShapes.height); 
 	g.setFont(titleFont); 
 	g.setColor(Color.black);
-	g.drawString("Evil Shapes", 270, 120);
+	g.drawString("Evil Circles", 280, 120);
 	g.setFont(titleFont2);
 	g.drawString("Press ENTER to start",250, 250);
 	g.drawString("Press SPACE for instructions", 200, 400);
